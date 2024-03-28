@@ -1,6 +1,7 @@
 import streamlit as st
 from geopy.geocoders import Nominatim
 import requests
+import os
 
 st.title('Property Price Predictor')
 
@@ -56,8 +57,14 @@ if st.button('Predict'):
             "zip_code": zip_code
             }
         
+        # Check if the app is running on Streamlit sharing
+        if 'streamlit' in os.environ.get('SERVER_SOFTWARE', '').lower():
+            endpoint = 'https://property-price-predictor-405i.onrender.com/predict_price'
+        else:
+            endpoint = 'http://127.0.0.1:8000/predict_price'
+
         # Makes post request to the FastAPI endpoint
-        response = requests.post('http://127.0.0.1:8000/predict_price', json=property_data)
+        response = requests.post(endpoint, json=property_data)
 
         if response.status_code == 200:
             prediction = response.json()

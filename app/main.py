@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from .predict import predict, make_dict
+from predict import predict, make_dict
 
 class Property(BaseModel):
     total_area_sqm: float
