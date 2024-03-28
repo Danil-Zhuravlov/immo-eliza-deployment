@@ -9,6 +9,9 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
+# Set an environment variable for the model path
+ENV MODEL_PATH=/app/model.joblib
+
 # Update pip
 RUN pip install --upgrade pip
 
