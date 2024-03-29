@@ -38,12 +38,12 @@ The model predictions are not perfect and should not be taken as professional ap
 
 To get a local copy up and running follow these simple steps.
 
-### Prerequisites
+### Prerequisites 🔍
 
 - Python 3.8+
 - pip
 
-### Installation
+### Installation 💿
 
 1. Clone the repo and go to the project directory
    ```sh
