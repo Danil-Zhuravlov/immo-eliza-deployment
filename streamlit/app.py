@@ -1,27 +1,43 @@
 import streamlit as st
+import pandas as pd
 from geopy.geocoders import Nominatim
 import requests
 import os
 
+# Set page config to wide mode for a better layout
+st.set_page_config(
+    page_title="Property Price Predictor",
+    page_icon="🏠",
+    layout="wide",
+)
+
 st.title('Property Price Predictor')
 
-address = st.text_input('Enter the property address')
+cols = st.columns(3)
 
-zip_code = st.number_input(
-    'Enter Postal Code',
-    value=0,
-    min_value=0,
-    max_value=9999,
-    format='%d')
+# Address inputs organized in columns
+with cols[0]:
+    street = st.text_input('Enter Street Name and Number', placeholder='Main Street 123')
+with cols[1]:
+    city = st.text_input('Enter City Name', placeholder='Brussels')
+with cols[2]:
+    zip_code = st.text_input('Enter Postal Code', value='1000')
+    try:
+        zip_code = int(zip_code)
+        if not (0 <= zip_code <= 9999):
+            raise ValueError
+    
+    except ValueError:
+        st.error('Please enter a valid postal code.')
 
-nbr_bedrooms = st.number_input(
-    'Enter The Number of Bedrooms',
-    value=0,
-    min_value=0,
-    max_value=1000,
-    step=1,
-    format='%d'
-    )
+country = st.text_input('Enter Country', placeholder='Belgium ')
+
+address = f'{street}, {city}, {zip_code}, {country}'
+
+geolocator = Nominatim(user_agent="property_price_predictor")
+location = geolocator.geocode(address)
+
+nbr_bedrooms = st.slider('Number of Bedrooms', 0, 15, 1)
 
 total_area_sqm = st.number_input(
     'Enter Total Area in Sqm',
@@ -48,6 +64,13 @@ if st.button('Predict'):
     if location:
         latitude = location.latitude
         longitude = location.longitude
+        map_data = pd.DataFrame({
+             'lat': [latitude],
+             'lon': [longitude]
+             })
+        # Display the map with the location
+        st.map(map_data, zoom=16)
+
         property_data = {
             "total_area_sqm": total_area_sqm,
             "surface_land_sqm": surface_land_sqm,
