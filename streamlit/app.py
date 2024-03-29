@@ -56,15 +56,9 @@ if st.button('Predict'):
             "nbr_bedrooms": nbr_bedrooms,
             "zip_code": zip_code
             }
-        
-        # Check if the app is running on Streamlit sharing
-        if 'streamlit' in os.environ.get('SERVER_SOFTWARE', '').lower():
-            endpoint = 'https://property-price-predictor-405i.onrender.com/predict_price'
-        else:
-            endpoint = 'http://127.0.0.1:8000/predict_price'
 
         # Makes post request to the FastAPI endpoint
-        response = requests.post(endpoint, json=property_data)
+        response = requests.post('https://property-price-predictor-405i.onrender.com/predict_price', json=property_data)
 
         if response.status_code == 200:
             prediction = response.json()
