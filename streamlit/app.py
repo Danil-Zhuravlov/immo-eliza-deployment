@@ -106,7 +106,7 @@ if st.button('Predict'):
 
             if response.status_code == 200:
                 prediction = response.json()
-                st.write(f'€{round(prediction["prediction"][0])}')
+                st.write(f'the approximate price of the property is €{round(prediction["prediction"][0])}')
         
             else:
                 st.error(f'Failed to get prediction from the API. Status code: {response.status_code}, Response: {response.text}')
