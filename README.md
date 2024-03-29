@@ -74,10 +74,13 @@ You can check out the deployed app [here](https://price-predictor-immo-eliza.str
 
 2. Run the FastAPI app
     ```sh
-    uvicorn api.main:app --reload
+    cd app
+    uvicorn main:app --reload
     ```
 
 3. On the Streamlit app, input the property features and get the price prediction!
+
+4. On the FastAPI app, you can access the API documentation [HERE](http://127.0.0.1:8000/docs)
 
 ## Contributing 🤝
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
